@@ -3,7 +3,7 @@ API REST que permite você fazer um CRUD de turmas, alunos, professores,além do
 
 
 
-##Pequena documentação de algumas rotas da API: 
+## Pequena documentação de algumas rotas da API: 
 
 
 Rota para listagem de alunos(GET):
