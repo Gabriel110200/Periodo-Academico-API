@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using WebApplication3.Models;
 namespace WebApplication3.Controllers
 {
     [Route("api/[controller]")]
+ 
     [ApiController]
     public class AlunosController : ControllerBase
     {
@@ -24,20 +26,33 @@ namespace WebApplication3.Controllers
 
         [HttpGet]
         [Route("")]
-
+   
         //retorna uma lista de alunos
-        public async Task<ActionResult<List<Aluno>>> Get([FromServices] DataContext _db)
+        public async Task<ActionResult<List<Aluno>>> Get([FromServices] DataContext _db, [FromQuery] int skip = 0, [FromQuery] int take = 25)
         {
-            var alunos = await _db.Alunos.ToListAsync();
+            var total = await _db.Alunos.CountAsync();
+
+            int pages = total / take;
+            
+
+            var alunos = await _db.Alunos.AsNoTracking().Skip(skip).Take(take).ToListAsync();
+            var turmas = await _db.Turmas.AsNoTracking().ToListAsync();
+
+            
+
 
             if (alunos.Count == 0)
             {
                 return NotFound();
             }
 
-            var result = Ok(alunos);
+         
 
-            return result;
+            return Ok(new { 
+                total, 
+                pages,
+                data = alunos
+            });
         }
 
 

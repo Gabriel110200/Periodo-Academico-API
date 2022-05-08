@@ -31,6 +31,9 @@ namespace WebApplication3
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                  Configuration.GetConnectionString("DefaultConnection")
             ));
+
+            services.AddCors();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +43,14 @@ namespace WebApplication3
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials()
+            );
+
 
             app.UseHttpsRedirection();
 
@@ -51,6 +62,13 @@ namespace WebApplication3
             {
                 endpoints.MapControllers();
             });
+
+            // Make sure you call this before calling app.UseMvc()
+            app.UseCors(
+                options => options.WithOrigins("http://example.com").AllowAnyMethod()
+            );
+
+          
         }
     }
 }

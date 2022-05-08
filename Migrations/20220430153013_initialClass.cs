@@ -41,7 +41,7 @@ namespace WebApplication3.Migrations
                         column: x => x.TurmaId,
                         principalTable: "Turmas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

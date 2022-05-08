@@ -93,7 +93,7 @@ namespace WebApplication3.Migrations
                 column: "TurmaId",
                 principalTable: "Turmas",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Cascade);
         }
     }
 }

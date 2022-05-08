@@ -9,7 +9,7 @@ using WebApplication3.Models;
 namespace WebApplication3.Controllers
 {
     [ApiController]
-    [Route("api/turma")]
+    [Route("api/turmas")]
 
     public class TurmaController : ControllerBase
     {
